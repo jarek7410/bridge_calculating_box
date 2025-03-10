@@ -2,9 +2,9 @@ package bridge_calculating_box
 
 import "fmt"
 
-var Version string = "0.0.1"
+var Version string = "ack"
 
-func version() {
-	fmt.Printf("Version: %s\n", Version)
+func VersionName() {
+	fmt.Printf("%s\n", Version)
 
 }
