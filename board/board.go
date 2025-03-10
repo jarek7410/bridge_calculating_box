@@ -1,9 +1,9 @@
 package board
 
 import (
-	contract "github.com/jarek7410/bridge_calculating_box/contract"
-	nsew "github.com/jarek7410/bridge_calculating_box/nsew"
-	result "github.com/jarek7410/bridge_calculating_box/result"
+	"github.com/jarek7410/bridge_calculating_box/contract"
+	"github.com/jarek7410/bridge_calculating_box/nsew"
+	"github.com/jarek7410/bridge_calculating_box/result"
 	"strconv"
 )
 
