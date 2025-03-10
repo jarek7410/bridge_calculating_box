@@ -102,41 +102,17 @@ func (b *Board) Points() (points int) {
 			points *= 4
 		}
 	}
-	if b.Contract.Color == contract.NT {
-		if b.Contract.Level < 3 {
-			points += 50
+	//premia Rajtara
+	if points < 100 {
+		points += 50
+	} else {
+		if val {
+			points += 500
 		} else {
-			if val {
-				points += 500
-			} else {
-				points += 300
-			}
+			points += 300
 		}
 	}
-	if b.Contract.Color == contract.Spade ||
-		b.Contract.Color == contract.Hearts {
-		if b.Contract.Level < 4 {
-			points += 50
-		} else {
-			if val {
-				points += 500
-			} else {
-				points += 300
-			}
-		}
-	}
-	if b.Contract.Color == contract.Clubs ||
-		b.Contract.Color == contract.Diamonds {
-		if b.Contract.Level < 5 {
-			points += 50
-		} else {
-			if val {
-				points += 500
-			} else {
-				points += 300
-			}
-		}
-	}
+
 	if b.Contract.Doubled == contract.X {
 		points += 50
 	}
