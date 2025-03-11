@@ -14,14 +14,56 @@ func VersionName() {
 
 }
 
+type Color int64
+
+const (
+	Spade Color = iota
+	Hearts
+	Clubs
+	Diamonds
+	NT
+)
+
+type Doubled int64
+
+const (
+	None Doubled = iota
+	X
+	XX
+)
+
 type Wind int
 
 const (
-	North = iota
+	North Wind = iota
 	South
 	East
 	West
 )
+
+type Outcome int
+
+const (
+	Minus Outcome = iota - 1
+	Equal
+	Plus
+)
+
+type Board struct {
+	Contract Contract
+	Result   Result
+	NSEW     Wind
+	Board    int16 // (mod 16)+1
+}
+type Contract struct {
+	Level   int
+	Color   Color
+	Doubled Doubled
+}
+type Result struct {
+	Outcome Outcome
+	Level   int
+}
 
 func (w Wind) String() string {
 	switch w {
@@ -55,19 +97,6 @@ func (w *Wind) Parse(windd string) (Wind, error) {
 		return -1, errors.New("invalid wind")
 	}
 
-}
-
-type Outcome int
-
-const (
-	Minus Outcome = iota - 1
-	Equal
-	Plus
-)
-
-type Result struct {
-	Outcome Outcome
-	Level   int
 }
 
 func (o Outcome) String() string {
@@ -113,22 +142,6 @@ func (r *Result) Parse(Result string) error {
 	return nil
 }
 
-type Color int64
-type Doubled int64
-
-const (
-	Spade Color = iota
-	Hearts
-	Clubs
-	Diamonds
-	NT
-)
-const (
-	None Doubled = iota
-	X
-	XX
-)
-
 func (c Color) String() string {
 	switch c {
 	case Spade:
@@ -155,12 +168,6 @@ func (d Doubled) String() string {
 	}
 	return "??"
 
-}
-
-type Contract struct {
-	Level   int
-	Color   Color
-	Doubled Doubled
 }
 
 func (c Contract) String() string {
@@ -209,8 +216,15 @@ func (c *Contract) Parse(constract string) (err error) {
 func Imps(point int) (imps int) {
 	return GiveMeImps(point)
 }
-
 func GiveMeImps(points int) (imps int) {
+	if points < 0 {
+		return giveMeImps(points)*-1
+	}
+	return giveMeImps(points)
+}
+
+func giveMeImps(points int) (imps int) {
+
 	if points < 0 {
 		points = -points
 	}
@@ -289,13 +303,6 @@ func GiveMeImps(points int) (imps int) {
 	return 24 //max as per The Laws of Duplicate Bridge 2017
 }
 
-type Board struct {
-	Contract Contract
-	Result   Result
-	NSEW     Wind
-	Board    int16 // (mod 16)+1
-}
-
 func (b Board) String() string {
 	return strconv.Itoa(int(b.Board)) + ", " +
 		b.Contract.String() + ", " +
@@ -315,7 +322,15 @@ func (b *Board) IsVulnerable() bool {
 	return false
 }
 
+//points for North-South pair (negative for East-West)
 func (b *Board) Points() (points int) {
+	if b.NSEW == North || b.NSEW == South {
+		return b.points()
+	}
+	return b.points()*-1
+}
+
+func (b *Board) points() (points int) {
 	val := b.IsVulnerable()
 	if b.Result.Outcome == Minus {
 		if b.Contract.Doubled == None {
@@ -471,3 +486,5 @@ func (b *Board) Points() (points int) {
 
 	return points
 }
+
+func Gettrue
