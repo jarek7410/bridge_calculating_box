@@ -218,7 +218,7 @@ func Imps(point int) (imps int) {
 }
 func GiveMeImps(points int) (imps int) {
 	if points < 0 {
-		return giveMeImps(points)*-1
+		return giveMeImps(points) * -1
 	}
 	return giveMeImps(points)
 }
@@ -327,7 +327,7 @@ func (b *Board) Points() (points int) {
 	if b.NSEW == North || b.NSEW == South {
 		return b.points()
 	}
-	return b.points()*-1
+	return b.points() * -1
 }
 
 func (b *Board) points() (points int) {
@@ -486,5 +486,3 @@ func (b *Board) points() (points int) {
 
 	return points
 }
-
-func Gettrue
